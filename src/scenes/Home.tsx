@@ -6,16 +6,18 @@ function Home (): JSX.Element{
     const [pokedex, setPokedex] = useState([] as any[]);
 
     useEffect(() => {
+        async function fetchData () {
+            try {
+                const res = await axios.get('https://pokeapi.co/api/v2/pokemon/')
+                setPokedex([...res.data.results]);
+            } catch (e){
+                console.log(e);
+            }
+        }
         fetchData();
-    }, []);
+    }, [pokedex, setPokedex]);
 
-    async function fetchData () {
-        await axios.get('https://pokeapi.co/api/v2/pokemon')
-            .then(res => {
-                setPokedex(res.data);
-            });
 
-    }
 
 
     return(
@@ -30,17 +32,10 @@ function Home (): JSX.Element{
                 backgroundColor: '#ccc',
                 borderRadius: 8,
             }}>
-                <table>
-                    <thead>
                         <h3>Lista dei pokemon</h3>
-                    </thead>
-
-                    <tbody>
                         <ul>
-                            {pokedex.map(pokemon => <li key={pokemon.id}>{pokemon.name}</li>)}
+                            {pokedex.map(pokemon => <li key={pokemon.url}>{pokemon.name}</li>)}
                         </ul>
-                    </tbody>
-                </table>
             </div>
 
         </div>
