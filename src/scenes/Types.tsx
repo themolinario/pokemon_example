@@ -9,21 +9,21 @@ interface ListElement {
 
 type SortOrder = "asc" | "desc";
 
-function Home (): JSX.Element{
-    const [pokedex, setPokedex] = useState<ListElement[]>([]);
+function Types (){
+    const [types, setTypes] = useState<ListElement[]>([]);
     const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
     const [search, setSearch]: [string, (search: string) => void] = useState("")
 
 
-    function sortAsc(pokedex: ListElement[]): ListElement[]{
-        return (pokedex.sort((a, b) => (a.name < b.name ? -1 : 1)));
+    function sortAsc(types: ListElement[]): ListElement[]{
+        return (types.sort((a, b) => (a.name < b.name ? -1 : 1)));
     }
 
-    function sortDesc(pokedex: ListElement[]): ListElement[]{
-        return (pokedex.sort((a, b) => (a.name > b.name ? -1 : 1)));
+    function sortDesc(types: ListElement[]): ListElement[]{
+        return (types.sort((a, b) => (a.name > b.name ? -1 : 1)));
     }
 
-    let sortedList = useMemo(() => sortOrder === 'asc' ? sortAsc(pokedex):sortDesc(pokedex), [pokedex, sortOrder])
+    let sortedList = useMemo(() => sortOrder === 'asc' ? sortAsc(types):sortDesc(types), [types, sortOrder])
 
     const handleChange = (e: { target: { value: string; }; }) => {
         setSearch(e.target.value);
@@ -37,16 +37,14 @@ function Home (): JSX.Element{
     useEffect(() => {
         async function fetchData () {
             try {
-                const res = await axios.get('https://pokeapi.co/api/v2/pokemon/')
-                setPokedex([...res.data.results]);
+                const res = await axios.get('https://pokeapi.co/api/v2/type/')
+                setTypes([...res.data.results]);
             } catch (e){
                 console.log(e);
             }
         }
         fetchData();
-    }, [pokedex, setPokedex]);
-
-
+    }, [types, setTypes]);
 
     return(
         <div style={{
@@ -76,7 +74,7 @@ function Home (): JSX.Element{
                         backgroundColor: 'white',
                         flex: 2
                     }}>
-                        <h3>Lista dei pokemon</h3>
+                        <h3>Lista dei tipi</h3>
                     </div>
                     <div style={{
                         alignSelf: 'center',
@@ -88,7 +86,7 @@ function Home (): JSX.Element{
                 </div>
 
                 <div>
-                    <input style={{width: '80%'}} placeholder='Cerca un pokemon..' onChange={handleChange}/>
+                    <input style={{width: '80%'}} placeholder='Cerca un tipo' onChange={handleChange}/>
                 </div>
 
                 <ul style={{
@@ -110,4 +108,4 @@ function Home (): JSX.Element{
     )
 }
 
-export default Home;
+export default Types;
