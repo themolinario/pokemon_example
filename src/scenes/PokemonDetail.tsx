@@ -1,11 +1,11 @@
 import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 
 interface PokemonProps {
     height: number;
     weight: string;
-    sprites: string;
+    sprites: React.ReactNode;
 }
 
 function PokemonDetail (): JSX.Element{
