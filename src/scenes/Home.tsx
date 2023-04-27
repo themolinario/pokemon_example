@@ -1,9 +1,32 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
+import PokemonList from "../components/PokemonList";
 
+interface ListElement {
+    name: string;
+    url: string;
+}
+
+type SortOrder = "asc" | "desc";
 
 function Home (): JSX.Element{
-    const [pokedex, setPokedex] = useState([] as any[]);
+    const [pokedex, setPokedex] = useState<ListElement[]>([]);
+    const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
+
+    function sortData(){
+            pokedex.sort((a, b) => {
+                const nameA = a.name.toUpperCase();
+                const nameB = b.name.toUpperCase();
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                return 0;
+            }
+    }
+
 
     useEffect(() => {
         async function fetchData () {
@@ -18,8 +41,6 @@ function Home (): JSX.Element{
     }, [pokedex, setPokedex]);
 
 
-
-
     return(
         <div style={{
             backgroundColor: "#55a15a",
@@ -32,10 +53,16 @@ function Home (): JSX.Element{
                 backgroundColor: '#ccc',
                 borderRadius: 8,
             }}>
-                        <h3>Lista dei pokemon</h3>
-                        <ul>
-                            {pokedex.map(pokemon => <li key={pokemon.url}>{pokemon.name}</li>)}
-                        </ul>
+                <div>
+                    <h3>Lista dei pokemon</h3>
+                    <button onClick={sortData}>Sort</button>
+                </div>
+
+                <ul style={{
+                    padding: 20,
+                }}>
+                    {sortData().map(pokemon => <div key={pokemon.url}><PokemonList name={pokemon.name} /></div>)}
+                </ul>
             </div>
 
         </div>
