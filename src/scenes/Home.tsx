@@ -1,6 +1,7 @@
 import React, {useEffect, useMemo, useState} from "react";
 import axios from "axios";
 import PokemonList from "../components/PokemonList";
+import {Link} from "react-router-dom";
 
 interface ListElement {
     name: string;
@@ -98,7 +99,7 @@ function Home (): JSX.Element{
                 }}>
                     {sortedList.map((pokemon) => {
                         if(search === '' || pokemon.name.toLowerCase().includes(search.toLowerCase())){
-                            return <div key={pokemon.url}><PokemonList name={pokemon.name} /></div>
+                            return <div key={pokemon.url}><Link to={pokemon.name}><PokemonList name={pokemon.name} /></Link></div>
                         }
                         return null;
                     })
