@@ -40,7 +40,7 @@ function Home (): JSX.Element{
 
         }
         fetchData();
-    }, [pokedex, setPokedex]);
+    }, []);
 
     const navigate = useNavigate();
 
@@ -48,13 +48,13 @@ function Home (): JSX.Element{
     return(
         <div className='Container'>
             <div className='FirstList'>
-                <PokemonList list={pokedex} onItemClick={(pokemon) => navigate(pokemon)} title='Lista Dei Pokemon'/>
+                <PokemonList list={pokedex} onItemClick={(pokemon) => navigate(pokemon)} title='Lista Dei Pokemon' sortBy="name"/>
             </div>
             <div className='SecondList'>
-                <PokemonList list={abilities} title='Lista delle abilità' />
+                <PokemonList list={abilities} title='Lista delle abilità' sortBy="name" />
             </div>
             <div className='ThirdList'>
-                <PokemonList list={types} title='Lista dei tipi'/>
+                <PokemonList list={types} title='Lista dei tipi' sortBy="name"/>
             </div>
         </div>
     )
