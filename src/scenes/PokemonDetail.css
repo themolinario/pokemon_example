@@ -1,0 +1,46 @@
+.DetailContainer{
+    background-color: #55a15a;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-bottom: 8px;
+}
+
+.ImageContainer{
+    padding: 20px;
+    background-color: white;
+    border-radius: 50%;
+    width: 10%;
+    align-self: center;
+}
+
+.FeaturesContainer{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 8px;
+    width: 50%;
+    align-self: center;
+}
+
+.PokemonName{
+    background-color: #ccc;
+    border-radius: 8px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 50%;
+    align-self: center;
+}
+
+.InnerDetailContainer{
+    width: 60%;
+    background-color: #ccc;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 8px;
+}

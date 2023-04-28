@@ -48,13 +48,29 @@ function Home (): JSX.Element{
     return(
         <div className='Container'>
             <div className='FirstList'>
-                <PokemonList list={pokedex} onItemClick={(pokemon) => navigate(pokemon)} title='Lista Dei Pokemon' sortBy="name"/>
+                <PokemonList
+                    list={pokedex}
+                    onItemClick={(pokemon) => navigate(pokemon)}
+                    title='Lista Dei Pokemon'
+                    sortBy="name"
+                    searchBy="name"
+                />
             </div>
             <div className='SecondList'>
-                <PokemonList list={abilities} title='Lista delle abilità' sortBy="name" />
+                <PokemonList
+                    list={abilities}
+                    title='Lista delle abilità'
+                    sortBy="name"
+                    searchBy="name"
+                />
             </div>
             <div className='ThirdList'>
-                <PokemonList list={types} title='Lista dei tipi' sortBy="name"/>
+                <PokemonList
+                    list={types}
+                    title='Lista dei tipi'
+                    sortBy="name"
+                    searchBy="name"
+                />
             </div>
         </div>
     )

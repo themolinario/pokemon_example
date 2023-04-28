@@ -15,10 +15,11 @@ interface ListProps {
     onItemClick?: (item: string) => void;
     title: string;
     sortBy: keyof ListElement;
+    searchBy: keyof ListElement;
 }
 
 
-function PokemonList ({list, onItemClick, title, sortBy}: ListProps): JSX.Element{
+function PokemonList ({list, onItemClick, title, sortBy, searchBy}: ListProps): JSX.Element{
 
 
     const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
@@ -29,11 +30,11 @@ function PokemonList ({list, onItemClick, title, sortBy}: ListProps): JSX.Elemen
     const [filteredElements, currentElements] = useMemo(() => {
         const indexOfLastElement = currentPage * elementsPerPage;
         const indexOfFirstElement = indexOfLastElement - elementsPerPage;
-        const filtered = search ? filterPokemon(list, search) : list;
+        const filtered = search ? filterPokemon(list, search, searchBy) : list;
         const sorted = sortOrder === 'asc' ? sortAsc(filtered, sortBy) : sortDesc(filtered, sortBy)
         const paginated = sorted.slice(indexOfFirstElement, indexOfLastElement);
         return [filtered, paginated];
-    }, [list, sortOrder, currentPage, elementsPerPage, search, sortBy]);
+    }, [list, sortOrder, currentPage, elementsPerPage, search, sortBy, searchBy]);
 
     const handleChange = (e: { target: { value: string; }; }) => {
         setSearch(e.target.value);
@@ -89,8 +90,8 @@ function sortDesc(pokedex: ListElement[], sortBy: keyof ListElement): ListElemen
     return (pokedex.sort((a, b) => (a[sortBy] > b[sortBy] ? -1 : 1)));
 }
 
-function filterPokemon(pokedex: ListElement[], search: string): ListElement[] {
-    return pokedex.filter((pokemon) => pokemon.name.toLowerCase().includes(search.toLowerCase()));
+function filterPokemon(pokedex: ListElement[], search: string, searchBy: keyof ListElement): ListElement[] {
+    return pokedex.filter((pokemon) => pokemon[searchBy].toLowerCase().includes(search.toLowerCase()));
 }
 
 export default PokemonList;
