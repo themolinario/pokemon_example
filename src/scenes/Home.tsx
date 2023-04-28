@@ -1,38 +1,20 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import PokemonList from "../components/PokemonList";
-import {Link} from "react-router-dom";
+import './Home.css';
+import {useNavigate} from "react-router-dom";
+
 
 interface ListElement {
     name: string;
     url: string;
 }
 
-type SortOrder = "asc" | "desc";
-
 function Home (): JSX.Element{
     const [pokedex, setPokedex] = useState<ListElement[]>([]);
-    const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
-    const [search, setSearch]: [string, (search: string) => void] = useState("")
+    const [abilities, setAbilities] = useState<ListElement[]>([]);
+    const [types, setTypes] = useState<ListElement[]>([]);
 
-
-    function sortAsc(pokedex: ListElement[]): ListElement[]{
-        return (pokedex.sort((a, b) => (a.name < b.name ? -1 : 1)));
-    }
-
-    function sortDesc(pokedex: ListElement[]): ListElement[]{
-        return (pokedex.sort((a, b) => (a.name > b.name ? -1 : 1)));
-    }
-
-    let sortedList = useMemo(() => sortOrder === 'asc' ? sortAsc(pokedex):sortDesc(pokedex), [pokedex, sortOrder])
-
-    const handleChange = (e: { target: { value: string; }; }) => {
-        setSearch(e.target.value);
-    };
-
-    const handleClick = () => {
-        setSortOrder((curr) => (curr === 'asc' ? 'desc' : 'asc'));
-    }
 
 
     useEffect(() => {
@@ -43,70 +25,37 @@ function Home (): JSX.Element{
             } catch (e){
                 console.log(e);
             }
+            try {
+                const res = await axios.get('https://pokeapi.co/api/v2/ability/')
+                setAbilities([...res.data.results]);
+            } catch (e){
+                console.log(e);
+            }
+            try {
+                const res = await axios.get('https://pokeapi.co/api/v2/type/')
+                setTypes([...res.data.results]);
+            } catch (e){
+                console.log(e);
+            }
+
         }
         fetchData();
     }, [pokedex, setPokedex]);
 
+    const navigate = useNavigate();
 
 
     return(
-        <div style={{
-            backgroundColor: "#55a15a",
-            borderRadius: 8,
-            display: "flex",
-            justifyContent: "center",
-            marginLeft: 24,
-            marginRight: 24,
-            marginBottom: 8,
-        }}>
-            <div style={{
-                padding: 4,
-                backgroundColor: '#ccc',
-                borderRadius: 8,
-                margin: 8,
-            }}>
-                <div style={{
-                    display: "flex",
-                    justifyContent: 'center',
-                    width: '100%',
-                    margin: 20
-                }}>
-                    <div style={{
-                        padding: 8,
-                        borderRadius: 8,
-                        backgroundColor: 'white',
-                        flex: 2
-                    }}>
-                        <h3>Lista dei pokemon</h3>
-                    </div>
-                    <div style={{
-                        alignSelf: 'center',
-                        flex: 1
-                    }}>
-                        <button onClick={handleClick}>Sort</button>
-                    </div>
-
-                </div>
-
-                <div>
-                    <input style={{width: '80%'}} placeholder='Cerca un pokemon..' onChange={handleChange}/>
-                </div>
-
-                <ul style={{
-                    padding: 20,
-                    display: "flex",
-                    flexDirection: 'column'
-                }}>
-                    {sortedList.map((pokemon) => {
-                        if(search === '' || pokemon.name.toLowerCase().includes(search.toLowerCase())){
-                            return <div key={pokemon.url}><Link to={pokemon.name}><PokemonList name={pokemon.name} /></Link></div>
-                        }
-                        return null;
-                    })
-                    }
-                </ul>
+        <div className='Container'>
+            <div className='FirstList'>
+                <PokemonList list={pokedex} onItemClick={(pokemon) => navigate(pokemon)} title='Lista Dei Pokemon'/>
             </div>
-
+            <div className='SecondList'>
+                <PokemonList list={abilities} title='Lista delle abilità' />
+            </div>
+            <div className='ThirdList'>
+                <PokemonList list={types} title='Lista dei tipi'/>
+            </div>
         </div>
     )
 }

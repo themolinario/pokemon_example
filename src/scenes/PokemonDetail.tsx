@@ -2,14 +2,16 @@ import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 
-interface PokemonProps {
+interface IPokemon {
     height: number;
     weight: string;
-    sprites: React.ReactNode;
+    sprites: {
+        front_default: string;
+    }
 }
 
 function PokemonDetail (): JSX.Element{
-    const [pokemon, setPokemon] = useState<PokemonProps>();
+    const [pokemon, setPokemon] = useState<IPokemon>();
 
     let {name} = useParams();
 
@@ -29,6 +31,7 @@ function PokemonDetail (): JSX.Element{
             {name}
             <h2> Height: {pokemon?.height} </h2>
             <h2> Weight: {pokemon?.weight} </h2>
+            <img src={pokemon?.sprites.front_default} />
         </div>
     )
 }

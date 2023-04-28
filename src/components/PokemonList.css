@@ -1,0 +1,35 @@
+.Container{
+    display: flex;
+}
+
+.InnerContainer{
+    padding: 4px;
+    background-color: #ccc;
+    border-radius: 8px;
+    margin: 8px;
+}
+
+.TitleBox{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 20px;
+}
+
+.InnerTitleBox{
+    padding: 8px;
+    border-radius: 8px;
+    background-color: white;
+    flex: 2;
+}
+
+.SortButtonContainer{
+    align-self: center;
+    flex: 1;
+}
+
+.ListContainer{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}

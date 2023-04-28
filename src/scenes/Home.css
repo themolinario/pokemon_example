@@ -1,0 +1,23 @@
+.Container{
+    background-color: #55a15a;
+    border-radius: 8px;
+    display: grid;
+
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-bottom: 8px;
+}
+
+.FirstList{
+    grid-column-start: 2;
+    grid-column-end: five;
+    grid-row-start: row1-start;
+    grid-row-end: 3;
+}
+
+.SecondList{
+    grid-column-start: 1;
+    grid-column-end: span col4-start;
+    grid-row-start: 2;
+    grid-row-end: span 2;
+}

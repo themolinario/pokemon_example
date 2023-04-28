@@ -13,23 +13,11 @@ function AppBar (){
             justifyContent: 'space-evenly',
 
         }}>
-            <Link to='/types'>
-                <h2>
-                    Types
-                </h2>
-            </Link>
                 <Link to='/'>
                     <h2>
                         Pokemon Dictionary
                     </h2>
                 </Link>
-
-
-            <Link to='/abilities'>
-                <h2>
-                    Abilities
-                </h2>
-            </Link>
 
 
         </div>
